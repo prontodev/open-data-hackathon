@@ -47,14 +47,12 @@
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
-    //var color = d3.scale.linear().domain([0, 10]).range(["white", "red"]);
-    //var color = d3.scale.category20b();
+//    var color = d3.scale.linear().domain([0, 20]).range(["green", "red"]);
 
     d3.json("stations.json", function(data) {
         var overlay = new google.maps.OverlayView();
 
         overlay.onAdd = function() {
-//            console.log(this.getPanes().overlayLayer)
             var layer = d3.select(this.getPanes().overlayLayer).append("div")
                 .attr("class", "stations");
 
@@ -70,21 +68,34 @@
                     .each(transform)
                     .attr("class", "marker");
 
-//                console.log(marker);
-
                 marker.append("svg:circle")
                     .attr("r", function(d) {
                         return d.value[2]
                     })
-                    .attr("cx", padding + 1.5)
-                    .attr("cy", padding + 1.5)
+                    .attr("cx", padding + 7)
+                    .attr("cy", padding + 7)
                     .style("fill", function(d) {
-                        //console.log(d);
-
-                        return "#FF2233";
-                        //return color(d);
+                        if (d.value[2] > 13) {
+                            return "#FF0000";
+                        }
+                        else if (d.value[2] > 11) {
+                            return "#FF8C00";
+                        }
+                        else if (d.value[2] > 9) {
+                            return "#FFD700";
+                        }
+                        else if (d.value[2] > 7) {
+                            return "#FFFF00";
+                        }
+                        else if (d.value[2] > 5) {
+                            return "#FFFFF0";
+                        }
+                        else {
+                            return "white";
+                        }
+                        //return color(d.value[2]);
                     })
-                    .style("opacity", 0.9);
+                    .style("opacity", 0.85);
 
                 console.log(marker);
 
