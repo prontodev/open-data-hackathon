@@ -20,20 +20,20 @@
         }
 
         .stations, .stations svg {
-          position: absolute;
+            position: absolute;
         }
 
         .stations svg {
-          width:50px;
-          height:50px;
-          padding-right: 100px;
-          font: 10px sans-serif;
+            width:80px;
+            height:80px;
+            padding-right: 100px;
+            font: 10px sans-serif;
         }
 
         .stations circle {
-          fill: brown;
-          stroke: black;
-          stroke-width: 1.5px;
+            fill: brown;
+            stroke: black;
+            stroke-width: 1.5px;
         }
     </style>
 </head>
@@ -69,36 +69,30 @@
                     .each(transform) // update existing markers
                     .enter().append("svg:svg")
                     .each(transform)
-                    .attr("class", "marker")
-                    .append("circle")
-                    .attr("r", function(d) {
-                        return d.value[2];
-                    })
-                    .attr("cx", padding)
-                    .attr("cy", padding);
+                    .attr("class", "marker");
 
                 console.log(marker);
 
                 // Add a circle.
-//                marker.append("svg:circle")
-//                    .attr("r", 9.5)
-//                    .attr("cx", padding)
-//                    .attr("cy", padding);
+                marker.append("svg:circle")
+                    .attr("r", function(d) {
+                        return d.value[2]
+                    })
+                    .attr("cx", padding)
+                    .attr("cy", padding);
 
                 // Add a label.
                 marker.append("svg:text")
-                    .attr("x", padding + 7)
+                    .attr("x", padding + 10)
                     .attr("y", padding)
                     .attr("dy", ".31em")
                     .text(function(d) { return d.key; });
 
+                console.log(marker);
+
                 function transform(d) {
-                    console.log(d.value[1]);
-                    console.log(d.value[0]);
-                    console.log(padding);
                     d = new google.maps.LatLng(d.value[0], d.value[1]);
                     d = projection.fromLatLngToDivPixel(d);
-                    console.log(d);
                     return d3.select(this)
                         .style("left", (d.x - padding) + "px")
                         .style("top", (d.y - padding) + "px");
