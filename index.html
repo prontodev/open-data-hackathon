@@ -2,8 +2,12 @@
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <title>Open Data Hackathon: Health Viz</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/font-awesome-4.3.0/css/font-awesome.min.css">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script type="text/javascript" src="static/js/d3.min.js"></script>
+
     <style type="text/css">
         html, body {
             width: 100%;
@@ -13,10 +17,10 @@
         }
 
         #map {
-            width: 35%;
+            width: 50%;
             height: 100%;
-            margin: 0;
-            padding: 0;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .stations, .stations svg {
@@ -38,7 +42,25 @@
 </head>
 <body>
 
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>OpenData Hackathon: Health Viz</h1>
+        <p>April 5, 2015</p>
+        <p>Nutcha Thananart, Teera Laiteerapong, Sataporn Vinyunavan, Kan Ouivirach</p>
+        <p><a href="https://github.com/prontodev/open-data-hackathon/tree/gh-pages" target="_blank"><i class="fa fa-github fa-2x"></i></a></p>
+        <p>We got the data from <a href="http://nutrition.anamai.moph.go.th/temp/main/view.php?group=1&id=706" target="_blank">สำนักโภชนาการ</a>, <a href="http://www.latlong.net/" target="_blank">LatLong.net</a>, and <a href="https://maps.google.com/" target="_blank">Google Maps</a>. We also provide the access to our processed data on CKAN <a href="http://data.or.th/dataset/thaiobesityrateage5to14year2557/resource/03043ddd-7e0e-4945-8560-f8850a123f3d" target="_blank">here</a>.
+        <p><strong>Note:</strong> Source code on this page is inspired by <a href="http://bl.ocks.org/mbostock/899711" target="_blank">Google Maps + D3</a>.</p>
+    </div>
+</div>
+
 <div id="map"></div>
+
+<br />
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>Finally, we would like to thank everyone who organized this event. It was really fun!</p>
+    </div>
+</div>
 
 <script type="text/javascript">
     var map = new google.maps.Map(d3.select("#map").node(), {
@@ -47,9 +69,7 @@
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
-//    var color = d3.scale.linear().domain([0, 20]).range(["green", "red"]);
-
-    d3.json("stations.json", function(data) {
+    d3.json("data/thaichildobesityrateage2557.json", function(data) {
         var overlay = new google.maps.OverlayView();
 
         overlay.onAdd = function() {
@@ -93,11 +113,8 @@
                         else {
                             return "white";
                         }
-                        //return color(d.value[2]);
                     })
                     .style("opacity", 0.85);
-
-                console.log(marker);
 
                 marker.append("svg:text")
                     .attr("x", padding + 15)
@@ -106,8 +123,6 @@
                     .text(function(d) {
                         return d.key;
                     });
-
-//                console.log(marker);
 
                 function transform(d) {
                     d = new google.maps.LatLng(d.value[0], d.value[1]);
@@ -122,6 +137,8 @@
         overlay.setMap(map);
     });
 </script>
+<script src="static/js/jquery-1.11.2.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
 
 </body>
 </html>
